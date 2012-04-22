@@ -57,7 +57,13 @@ class CoderwallUser():
         return self.__str__()
 
     def __unicode__(self):
-        return "<%s: %s badges>" % (self.username, len(self.badges))
+        number_of_badges = len(self.badges)
+        if number_of_badges == 1:
+            badges_str = "badge"
+        else:
+            badges_str = "badges"
+        return "<%s: %s %s>" % (self.username, len(self.badges), badges_str)
+
 
 class Badge():
     def __init__(self, image_uri, description, name):
@@ -73,6 +79,7 @@ class Badge():
 
     def __unicode__(self):
         return "<%s: %s>" % (self.name, self.description)
+
 
 def get_data(api_url):
 
