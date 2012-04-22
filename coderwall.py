@@ -1,5 +1,7 @@
 import simplejson as json
 import urllib2
+from collections import defaultdict
+
 
 class CoderwallTeam():
     def __init__(self, team_id):
@@ -14,12 +16,22 @@ class CoderwallTeam():
             self.rank = data['rank']
             self.score = data['score']
             self.members = self.get_members_info(data['team_members'])
+            self.badges_dict = self.get_badges_dict(self.members)
         else:
             raise Exception("Couldn't find team with id %s" % team_id)
 
     def get_members_info(self, data):
         usernames = [member_dict['username'] for member_dict in data]
         return [CoderwallUser(username) for username in usernames]
+
+    def get_badges_dict(self, members):
+        badges_dict = defaultdict(int)
+        for member in members:
+            for badge in member.badges:
+                badges_dict[badge.name] += 1
+
+        return badges_dict
+
 
 class CoderwallUser():
     def __init__(self, username):
