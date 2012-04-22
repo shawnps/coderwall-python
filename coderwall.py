@@ -25,10 +25,10 @@ class CoderwallTeam():
         return [CoderwallUser(username) for username in usernames]
 
     def get_badges_dict(self, members):
-        badges_dict = defaultdict(int)
+        badges_dict = defaultdict(list)
         for member in members:
             for badge in member.badges:
-                badges_dict[badge.name] += 1
+                badges_dict[badge.name].append(member)
 
         return badges_dict
 
